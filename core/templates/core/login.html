@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+{% block principal %}
+{% load static %}
+<div class="container-fluid">
+    <div class="row align-items-center text-center justify-content-center min-vh-100">
+        <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+            <h3 class="fw-light mb-5">Iniciar Sesion.</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="row align-items-center">
+                    <div class="col text-end"><button type="submit" class="btn btn-primary w-100">Iniciar Sesión</button></div>
+                    <div class="col"> <a class="hover-oscuro link-oscuro" onclick="ContactarAdmin()"> ¿Olvidaste tu contraseña?</a></div>
+                </div>
+            </form>
+            <hr class="text-300 mt-6" />
+            <div class="fs-10">¿Necesitas una cuenta? <a class="fs-10 d-inline-block hover-oscuro link-oscuro" onclick="ContactarAdmin()">Registrate.</a></div>
+            <hr class="text-300" />
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

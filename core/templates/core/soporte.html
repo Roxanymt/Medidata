@@ -1,0 +1,60 @@
+{% extends 'core/base.html' %}
+{% block principal %}
+{% load static %}
+<section class="pt-4 pb-0">
+    <div class="container-fluid">
+      <div class="row min-vh-md-100 overflow-hidden">
+        <div class="col text-center">
+          <h1 class="ls-2 mb-5 text-uppercase">Bienvenido al Módulo de Soporte</h1>
+          <h2 class="fw-light">Contáctanos para mejorar tu experiencia</h2>
+          <p class="mt-1 bi g-font fw-light">
+            En R&R nos preocupamos por tu experiencia en nuestra plataforma. Si tienes algún problema o sugerencia, no dudes en contactarnos.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="container">
+    <div class="row align-items-start">
+      <!-- Información de contacto -->
+      <aside class="col-md-6 p-3">
+        <h2>Contáctanos</h2>
+        <p><i class="fab fa-whatsapp me-2"></i> +56 9 12345678</p>
+        <p><i class="fas fa-envelope me-2"></i> soporte@medidata.cl</p>
+        <p><i class="fas fa-phone me-2"></i> 2 242 131 46</p>
+        <p><i class="fas fa-map-marker-alt me-2"></i> Av. Concha y Toro 2730, 8150215 Puente Alto, Región Metropolitana, Chile.</p>
+      </aside>
+  
+      <section class="col-md-6 p-3">
+        <h2>Descríbenos tu problema o mejora</h2>
+        <form>
+            <div class="mb-3">
+                <select class="form-control" id="exampleFormControlSelect1" onchange="mostrarTexto()">
+                  <option value="">Selecciona una opción</option>
+                  <option value="1">Criticidad Alta</option>
+                  <option value="2">Criticidad Media</option>
+                  <option value="3">Criticidad Baja</option>
+                  <option value="4">Sugerencias</option>
+                  <option value="5">Felicitaciones</option>
+                </select>
+              </div>
+              <div id="texto-descriptivo" class="mt-3 text-secondary">
+                Selecciona una opción para más información.
+              </div>
+              <br>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="ejemplo@ejemplo.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Describa el motivo de su contacto</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </section>
+    </div>
+  </section>
+
+{% endblock %}

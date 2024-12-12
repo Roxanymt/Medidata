@@ -1,0 +1,124 @@
+Este txt solo es para explicar los cambios realizados
+
+////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////
+
+
+
+
+////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////////////////////////
+//////////////////////PRUEBAS//////////////////////////////////////
+
+Carga la pagina y verifica si existe la palabra en el html, verificando que carge la pagina correctamente.
+
+
+from django.test import TestCase
+
+# Create your tests here.
+# FILE: core/tests.py
+from django.test import TestCase
+from django.urls import reverse
+
+class SimpleTest(TestCase):
+    def test_homepage(self):
+        response = self.client.get(reverse('index'))  # Usa el nombre de la URL 'index'
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Bienvenido")
+
+Esta prueba verifica que las paginas o templates cargen correctamente y sin errores.
+
+cambiando los parametros se pueden verificar los demas templates.
+
+////////////////////////////////////////////////////////////////////////
+
+inyeciones sql y xss
+
+from django.test import TestCase
+from django.urls import reverse
+
+# Create your tests here.
+# FILE: core/tests.py
+
+class SQLInjectionTest(TestCase):
+    def test_sql_injection(self):
+        # Realiza una solicitud GET con un intento de inyección SQL
+        response = self.client.get(reverse('login') + "?q=' OR '1'='1")
+        # Verifica que la respuesta no contenga un resultado inesperado
+        self.assertNotContains(response, "unexpected result")
+
+class XSSTest(TestCase):
+    def test_xss_protection(self):
+        # Realiza una solicitud POST con un intento de XSS
+        response = self.client.post(reverse('login'), {'comment': '<script>alert("XSS")</script>'})
+        # Verifica que la respuesta no contenga el script
+        self.assertNotContains(response, '<script>alert("XSS")</script>')
+
+//////////////////////////////////////////////////////////////////////////////////
+
+Framework de Pruebas: Django incluye un framework de pruebas basado en unittest.
+Estructura de Pruebas: Coloca tus pruebas en un directorio llamado tests dentro de cada aplicación de Django.
+Escribir Pruebas Unitarias: Crea funciones de prueba en archivos como tests.py dentro de cada aplicación.
+
+Ejemplo básico de prueba unitaria:
+
+from django.test import TestCase
+from django.urls import reverse
+
+class SimpleTest(TestCase):
+    def test_homepage(self):
+        response = self.client.get(reverse('index'))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Bienvenido")
+
+Pruebas de Integración
+Estructura de Pruebas: Similar a las pruebas unitarias, pero enfocadas en la interacción entre diferentes partes de tu aplicación.
+Escribir Pruebas de Integración: Asegúrate de que los diferentes componentes trabajen juntos correctamente.
+Ejemplo de prueba de integración:
+
+from django.test import TestCase
+from django.urls import reverse
+
+class IntegrationTest(TestCase):
+    def test_login_and_redirect(self):
+        response = self.client.post(reverse('login'), {'username': 'user', 'password': 'pass'})
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('home'))
+
+Pruebas Funcionales
+Herramienta de Pruebas Funcionales: Usa herramientas como Selenium para pruebas end-to-end.
+Configurar Selenium: Instala Selenium con pip install selenium y configura un navegador web (como Chrome o Firefox) para las pruebas.
+Ejemplo de prueba funcional con Selenium:
+
+from selenium import webdriver
+from django.test import LiveServerTestCase
+
+class FunctionalTest(LiveServerTestCase):
+    def setUp(self):
+        self.browser = webdriver.Chrome()
+
+    def tearDown(self):
+        self.browser.quit()
+
+    def test_homepage(self):
+        self.browser.get(self.live_server_url)
+        self.assertIn("Bienvenido", self.browser.page_source)
+
+
+Resumen
+Pruebas Unitarias: Prueban funciones individuales. Usa TestCase de Django.
+Pruebas de Integración: Prueban la interacción entre componentes. Usa TestCase de Django.
+Pruebas Funcionales: Prueban la aplicación completa desde la perspectiva del usuario. Usa Selenium u otras herramientas similares.
+Pasos Siguientes
+Añadir Pruebas: Añade las pruebas relevantes en los archivos tests.py de cada aplicación.
+Ejecutar Pruebas: Usa el comando python manage.py test para ejecutar todas las pruebas.
+Si necesitas ayuda específica con algún código o una configuración, por favor proporciona más detalles.
+

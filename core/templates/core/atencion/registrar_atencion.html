@@ -1,0 +1,75 @@
+{% extends 'core/base.html' %}
+{% block principal %}
+
+<div class="mt-5 container">
+    {% if messages %}
+    <div>
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-8 offset-2">
+            <div class="alert alert-info" role="alert">
+                <p><strong>Usted está actualizando la ficha de:</strong></p>
+                <p><strong>Paciente:</strong> {{ paciente.nombre }} {{ paciente.apellido }}</p>
+                <p><strong>Rut:</strong> {{ paciente.rut }}</p>
+                <p><strong>Número de Ficha Médica:</strong> {{ ficha_medica.id }}</p>
+            </div>
+            <div class="card">
+                <div class="card-header text-center">
+                    <div class="card-title">
+                        <h3>Registro de Consulta Médica</h3>
+                    </div>
+                </div>
+                <div class="card-body p-5">
+                    {% if previsualizar %}
+                        <!-- Mostrar la Previsualización -->
+                        <h3>Previsualización de Consulta Médica</h3>
+                        <p><strong>Paciente:</strong> {{ form.cleaned_data.paciente.nombre }} {{ form.cleaned_data.paciente.apellido }}</p>
+                        <p><strong>Número de Ficha Médica:</strong> {{ ficha_medica.id }}</p>
+                        <p><strong>Médico:</strong> {{ request.user.get_full_name }}</p>
+                        <p><strong>Especialidad del Médico:</strong> {{ especialidad }}</p>
+                        <p><strong>Fecha de Atención:</strong> {{ form.cleaned_data.fecha_atencion|date:"Y-m-d" }}</p>
+                        <p><strong>Anamnesis:</strong> {{ form.cleaned_data.anamesis }}</p>
+                        <p><strong>Medicamentos Recetados:</strong> {{ form.cleaned_data.medicamentos_recetados }}</p>
+                        <p><strong>Exámenes Indicados:</strong> {{ form.cleaned_data.examenes_indicados }}</p>
+                        <p><strong>Diagnóstico:</strong> {{ form.cleaned_data.diagnostico }}</p>
+
+                        <!-- Formulario para Confirmar o Volver -->
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            <input type="hidden" name="paciente" value="{{ form.cleaned_data.paciente }}">
+                            <input type="hidden" name="fecha_atencion" value="{{ form.cleaned_data.fecha_atencion|date:"Y-m-d" }}">
+                            <input type="hidden" name="anamesis" value="{{ form.cleaned_data.anamesis }}">
+                            <input type="hidden" name="medicamentos_recetados" value="{{ form.cleaned_data.medicamentos_recetados }}">
+                            <input type="hidden" name="examenes_indicados" value="{{ form.cleaned_data.examenes_indicados }}">
+                            <input type="hidden" name="diagnostico" value="{{ form.cleaned_data.diagnostico }}">
+                            <button type="submit" name="confirm" class="btn btn-success">Confirmar y Guardar</button>
+                            <button type="submit" name="edit" class="btn btn-secondary">Volver y Editar</button>
+                        </form>
+                        <div class="alert alert-info mt-5" role="alert">
+                            Usted está actualizando esta ficha como médico {{ request.user.get_full_name }}
+                        </div>
+                    {% else %}
+                        <!-- Mostrar el Formulario de Registro -->
+                        <form method="post" action="">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit" name="preview" class="btn btn-primary">Previsualizar</button>
+                        </form>
+                    {% endif %}
+                </div>
+                
+                <div class="card-footer p-3">
+                    <a class="btn btn-warning" href="{% url 'medico' %}">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

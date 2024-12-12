@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block principal %}
+
+
+<div class="mt-5 container">
+    <a class="btn btn-success" href="{% url 'ficha_paciente' ficha_medica.id %}">Volver a la Ficha</a>
+</div>
+
+<div class="mt-5 container">
+    <h2>Detalle de la Atención</h2>
+    <p><strong>Paciente:</strong> {{ atencion.paciente.nombre }} {{ atencion.paciente.apellido }}</p>
+    <p><strong>Médico:</strong> {{ atencion.medico.get_full_name }}</p>
+    <p><strong>Especialidad del Médico:</strong> {{ especialidad }}</p>
+    <p><strong>Fecha de Atención:</strong> {{ atencion.fecha_atencion }}</p>
+    <p><strong>Anamnesis:</strong> {{ atencion.anamesis }}</p>
+    <p><strong>Medicamentos Recetados:</strong> {{ atencion.medicamentos_recetados }}</p>
+    <p><strong>Exámenes Indicados:</strong> {{ atencion.examenes_indicados }}</p>
+    <p><strong>Diagnóstico:</strong> {{ atencion.diagnostico }}</p>
+</div>
+
+<div class="mt-5 container">
+    <button class="btn btn-primary" onclick="printPage()">Imprimir o Guardar como PDF</button>
+</div>
+
+
+{% endblock %}

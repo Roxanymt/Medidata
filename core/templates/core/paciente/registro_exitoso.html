@@ -1,0 +1,22 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block principal %}
+<div class="mt-2 container min-vh-25 d-flex flex-column justify-content-center"></div>
+    <div class="row flex-grow-1">
+        <div class="col-8 offset-2">
+            <div class="card">
+                <div class="card-header text-center">
+                    <div class="card-title">
+                        <h3>Registro Exitoso</h3>
+                    </div>
+                </div>
+                <div class="card-body text-center">
+                    <p>El paciente ha sido registrado correctamente.</p>
+                    <a class="btn btn-primary" href="{% url 'medico' %}">Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

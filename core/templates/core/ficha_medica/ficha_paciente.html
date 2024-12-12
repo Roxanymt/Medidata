@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block principal %}
+<div class="container">
+    <div class="alert alert-info mt-5 text-center" role="alert">
+        <h5 class="">Atenciones de la ficha médica de paciente {{ ficha.paciente.nombre }} {{ ficha.paciente.apellido }}</h5>
+    </div>
+
+    {% if atenciones %}
+        <!-- Si hay atenciones, mostramos la tabla -->
+        <div class="mt-5 container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <td>ID</td>
+                        <td>Médico</td>
+                        <td>Fecha de Atención</td>
+                        <td>Diagnóstico</td>
+                        <td>Opciones</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for atencion in atenciones %}
+                        <tr>
+                            <td>{{ atencion.id }}</td>
+                            <td>{{ atencion.medico.get_full_name }}</td>
+                            <td>{{ atencion.fecha_atencion }}</td>
+                            <td>{{ atencion.diagnostico }}</td>
+                            <td>
+                                <a href="{% url 'detalle_atencion' atencion.id %}" class="btn btn-info">Ver Detalle</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <!-- Si no hay atenciones, mostramos un mensaje y un botón para agregar una nueva atención -->
+        <div class="alert alert-danger mt-5 text-center" role="alert">
+            Este paciente no tiene atenciones registradas.
+        </div>
+        <div class="d-flex justify-content-center">
+            <a href="{% url 'registrar_atencion' ficha.paciente.id %}" class="btn btn-primary mt-3">Agregar Atención</a>
+        </div>
+    {% endif %}
+
+    <div class="mt-5 container">
+        <a class="btn btn-success" href="{% url 'listar_fichasmedicas' %}">Volver a Fichas Médicas</a>
+    </div>
+</div>
+{% endblock %}
